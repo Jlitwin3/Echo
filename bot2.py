@@ -10,7 +10,7 @@ import google.generativeai as genai
 def listen_to_user(output_file = "user_input.wav"):
     r = sr.Recognizer()
     with sr.Microphone() as source:
-        print("Ask a question for the Bot to answer!")
+        print("Ask a question for the bot to answer...")
         r.adjust_for_ambient_noise(source)
         audio = r.listen(source, timeout = 10, phrase_time_limit = 20)
         try:
@@ -26,8 +26,6 @@ def listen_to_user(output_file = "user_input.wav"):
             print("Could not request results from Google Speech Recognition service")
             return None
         
-
-
 def generate_response(text):
     if not text:
         print("Sorry, I didn't catch that. Can you repeat?")
@@ -36,22 +34,38 @@ def generate_response(text):
         genai.configure(api_key="AIzaSyArKoZaTlIZd-R_NP-DKz9q-ngb5Vgi6LE")
         model = genai.GenerativeModel("gemini-1.5-flash-latest")
         response = model.generate_content(text)
-        if response and hasattr(response, 'candidates') and len(response.candidates) > 0:
-            candidate = response.candidates[0]
-            if hasattr(candidate, 'content') and hasattr(candidate.content, 'parts') and len(candidate.content.parts) > 0:
-                content = candidate.content.parts[0].text
-                return content.strip()
-            else:
-                return None
-        else:
-            return None
+
+        # Check if response exists and has text content
+        if response and hasattr(response, "text"):
+            return response.text.strip()
+        return None
     except Exception as e:
         print(f"An error occurred: {e}")
         return None
 
+# def generate_response(text):
+#     if not text:
+#         print("Sorry, I didn't catch that. Can you repeat?")
+#         return None
+#     try:
+#         genai.configure(api_key="AIzaSyArKoZaTlIZd-R_NP-DKz9q-ngb5Vgi6LE")
+#         model = genai.GenerativeModel("gemini-1.5-flash-latest")
+#         response = model.generate_content(text)
+#         if response and hasattr(response, 'candidates') and len(response.candidates) > 0:
+#             candidate = response.candidates[0]
+#             if hasattr(candidate, 'content') and hasattr(candidate.content, 'parts') and len(candidate.content.parts) > 0:
+#                 content = candidate.content.parts[0].text
+#                 return content.strip()
+#             else:
+#                 return None
+#         else:
+#             return None
+#     except Exception as e:
+#         print(f"An error occurred: {e}")
+#         return None
 
-def play_audio(wav):
-    wf = wave.open("output.wav", 'rb')
+def play_audio(file_path="output.wav"):
+    wf = wave.open(file_path, 'rb')
     p = pa.PyAudio()
     stream = p.open(format=pa.paInt16,
                     channels=wf.getnchannels(),
@@ -66,6 +80,22 @@ def play_audio(wav):
     stream.close()
     p.terminate()
 
+# def play_audio(wav):
+#     wf = wave.open("output.wav", 'rb')
+#     p = pa.PyAudio()
+#     stream = p.open(format=pa.paInt16,
+#                     channels=wf.getnchannels(),
+#                     rate=wf.getframerate(),
+#                     output=True)
+#     chunk = 1024
+#     data = wf.readframes(chunk)
+#     while data:
+#         stream.write(data)
+#         data = wf.readframes(chunk)
+#     stream.stop_stream()
+#     stream.close()
+#     p.terminate()
+
 
 def speak(text):
     device = 'cuda' if torch.cuda.is_available() else 'cpu'
@@ -76,6 +106,7 @@ def speak(text):
 
 def main():
     while True:
+        print("Ask a question for the Bot to answer!")
         user_input = listen_to_user()
         if user_input:
             print("Your speech: ", user_input)
@@ -85,4 +116,4 @@ def main():
         else:
             print("Sorry I didn't catch that, can you repeat?")
 
-main()
+
