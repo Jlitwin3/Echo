@@ -5,7 +5,7 @@ from speechToText import audioFile as af
 import wave
 import pyaudio as pa
 import google.generativeai as genai
-import asyncio
+
 
 
 def listen_to_user(output_file = "user_input.wav"):
