@@ -1,0 +1,35 @@
+.spinner {
+  background-image: linear-gradient(rgb(186, 66, 255) 35%, rgb(0, 225, 255));
+  width: 120px;
+  height: 120px;
+  animation: spinning 2s linear infinite;
+  text-align: center;
+  border-radius: 60px;
+  filter: blur(1px) brightness(0.3);
+  box-shadow: 0px -5px 20px 0px rgba(186, 66, 255, 0.5), 0px 5px 20px 0px rgba(0, 225, 255, 0.5);
+  transition: filter 0.3s ease, animation 0.3s ease;
+}
+
+.spinner:hover {
+  filter: blur(1px) brightness(0.5);
+}
+
+.spinner.active {
+  animation: spinning 1s linear infinite;
+  filter: blur(1px) brightness(3.5);
+}
+
+.spinner1 {
+  background-color: rgb(36, 36, 36);
+  width: 120px;
+  height: 120px;
+  border-radius: 60px;
+  filter: blur(10px);
+}
+
+@keyframes spinning {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
