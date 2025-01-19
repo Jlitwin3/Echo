@@ -1,4 +1,3 @@
-from transformers import pipeline
 import speech_recognition as sr
 from TTS.api import TTS
 import torch
