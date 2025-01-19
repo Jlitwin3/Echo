@@ -1,7 +1,6 @@
 import speech_recognition as sr
 from TTS.api import TTS
 import torch
-from speechToText import audioFile as af
 import wave
 import pyaudio as pa
 import google.generativeai as genai
