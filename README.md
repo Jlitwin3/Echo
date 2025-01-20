@@ -51,3 +51,12 @@ The backend sends the AI’s response (text and audio) back to the frontend.
 The frontend displays the response text and plays the audio.
 
 
+REQUIRED INSTALLS: 
+
+SpeechRecognition
+TTS
+torch
+pyaudio
+npm
+flask
+
